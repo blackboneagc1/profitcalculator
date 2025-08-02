@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Calculator with Final Discount</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
+        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; border: none; background: #007bff; color: #fff; font-size: 16px; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 15px; font-size: 18px; font-weight: bold; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Price Calculator</h2>
+        <input type="number" id="price" placeholder="Product Price">
+        <input type="number" id="quantity" placeholder="Quantity">
+        <input type="number" id="shipping" placeholder="Shipping Cost">
+        <input type="number" id="profitPercent" placeholder="Profit Margin (%)">
+        <input type="number" id="discount" placeholder="Final Discount (%)">
+        <button onclick="calculatePrice()">Calculate</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            const price = parseFloat(document.getElementById('price').value);
+            const quantity = parseFloat(document.getElementById('quantity').value);
+            const shipping = parseFloat(document.getElementById('shipping').value);
+            const profitPercent = parseFloat(document.getElementById('profitPercent').value);
+            const discount = parseFloat(document.getElementById('discount').value);
+
+            if (isNaN(price) || isNaN(quantity) || isNaN(shipping) || isNaN(profitPercent) || isNaN(discount)) {
+                document.getElementById('result').innerText = "Please enter valid numbers in all fields";
+                return;
+            }
+
+            // Step 1: calculate total cost
+            const totalPrice = price * quantity + shipping;
+            // Step 2: calculate profit before discount
+            const profitAmount = totalPrice * (profitPercent / 100);
+            const sellingPrice = totalPrice + profitAmount;
+            // Step 3: apply final discount on full selling price
+            const discountAmount = sellingPrice * (discount / 100);
+            const finalSellingPrice = sellingPrice - discountAmount;
+            // Step 4: calculate profit after discount
+            const finalProfit = finalSellingPrice - totalPrice;
+
+            document.getElementById('result').innerHTML = `
+                Total Price (Products + Shipping): ৳${totalPrice.toFixed(2)}<br>
+                Profit Amount (Before Discount): ৳${profitAmount.toFixed(2)}<br>
+                Selling Price (Before Discount): ৳${sellingPrice.toFixed(2)}<br>
+                Final Discount: -৳${discountAmount.toFixed(2)} (${discount.toFixed(2)}%)<br>
+                <strong>Final Selling Price (After Discount): ৳${finalSellingPrice.toFixed(2)}</strong><br>
+                <strong>Profit Amount (After Discount): ৳${finalProfit.toFixed(2)}</strong>
+            `;
+        }
+    </script>
+</body>
+</html>
