@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price Calculator with Final Discount</title>
+    <title>Responsive Price Calculator</title>
     <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
-        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 350px; text-align: center; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
-        button { width: 100%; padding: 10px; border: none; background: #007bff; color: #fff; font-size: 16px; cursor: pointer; border-radius: 4px; }
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; margin: 0; }
+        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; box-sizing: border-box; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 4px; box-sizing: border-box; }
+        input { border: 1px solid #ccc; }
+        button { border: none; background: #007bff; color: #fff; font-size: 16px; cursor: pointer; }
         button:hover { background: #0056b3; }
-        .result { margin-top: 15px; font-size: 18px; font-weight: bold; text-align: left; }
+        .result { margin-top: 15px; font-size: 16px; font-weight: bold; text-align: left; word-wrap: break-word; }
+        @media (max-width: 500px) {
+            h2 { font-size: 20px; }
+            .result { font-size: 14px; }
+        }
     </style>
 </head>
 <body>
@@ -38,15 +43,11 @@
                 return;
             }
 
-            // Step 1: calculate total cost
             const totalPrice = price * quantity + shipping;
-            // Step 2: calculate profit before discount
             const profitAmount = totalPrice * (profitPercent / 100);
             const sellingPrice = totalPrice + profitAmount;
-            // Step 3: apply final discount on full selling price
             const discountAmount = sellingPrice * (discount / 100);
             const finalSellingPrice = sellingPrice - discountAmount;
-            // Step 4: calculate profit after discount
             const finalProfit = finalSellingPrice - totalPrice;
 
             document.getElementById('result').innerHTML = `
