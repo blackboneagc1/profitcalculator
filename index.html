@@ -1,31 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Responsive Price Calculator</title>
     <style>
-        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; margin: 0; }
-        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; box-sizing: border-box; }
-        input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 4px; box-sizing: border-box; }
-        input { border: 1px solid #ccc; }
-        button { border: none; background: #007bff; color: #fff; font-size: 16px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        .result { margin-top: 15px; font-size: 16px; font-weight: bold; text-align: left; word-wrap: break-word; }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input {
+            border: 1px solid #ccc;
+        }
+        button {
+            border: none;
+            background: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+            word-wrap: break-word;
+        }
         @media (max-width: 500px) {
-            h2 { font-size: 20px; }
-            .result { font-size: 14px; }
+            h2 {
+                font-size: 20px;
+            }
+            .result {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Price Calculator</h2>
-        <input type="number" id="price" placeholder="Product Price">
-        <input type="number" id="quantity" placeholder="Quantity">
-        <input type="number" id="shipping" placeholder="Shipping Cost">
-        <input type="number" id="profitPercent" placeholder="Profit Margin (%)">
-        <input type="number" id="discount" placeholder="Final Discount (%)">
+        <input type="number" id="price" placeholder="Product Price" />
+        <input type="number" id="quantity" placeholder="Quantity (default 1)" />
+        <input type="number" id="shipping" placeholder="Shipping Cost" />
+        <input type="number" id="profitPercent" placeholder="Profit Margin (%)" />
+        <input type="number" id="discount" placeholder="Final Discount (%) (default 0)" />
         <button onclick="calculatePrice()">Calculate</button>
         <div class="result" id="result"></div>
     </div>
@@ -33,13 +76,22 @@
     <script>
         function calculatePrice() {
             const price = parseFloat(document.getElementById('price').value);
-            const quantity = parseFloat(document.getElementById('quantity').value);
+            let quantity = parseFloat(document.getElementById('quantity').value);
             const shipping = parseFloat(document.getElementById('shipping').value);
             const profitPercent = parseFloat(document.getElementById('profitPercent').value);
-            const discount = parseFloat(document.getElementById('discount').value);
+            let discount = parseFloat(document.getElementById('discount').value);
 
-            if (isNaN(price) || isNaN(quantity) || isNaN(shipping) || isNaN(profitPercent) || isNaN(discount)) {
-                document.getElementById('result').innerText = "Please enter valid numbers in all fields";
+            // Default quantity to 1 if empty or invalid
+            if (isNaN(quantity) || quantity <= 0) {
+                quantity = 1;
+            }
+            // Default discount to 0 if empty or invalid
+            if (isNaN(discount) || discount < 0) {
+                discount = 0;
+            }
+
+            if (isNaN(price) || isNaN(shipping) || isNaN(profitPercent)) {
+                document.getElementById('result').innerText = "Please enter valid numbers for Price, Shipping and Profit Margin";
                 return;
             }
 
