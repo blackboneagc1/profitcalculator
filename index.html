@@ -30,6 +30,7 @@
             margin: 10px 0;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 16px;
         }
         input {
             border: 1px solid #ccc;
@@ -38,8 +39,8 @@
             border: none;
             background: #007bff;
             color: #fff;
-            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background: #0056b3;
@@ -59,6 +60,13 @@
                 font-size: 14px;
             }
         }
+        .button-row {
+            display: flex;
+            gap: 10px;
+        }
+        .button-row button {
+            width: 50%;
+        }
     </style>
 </head>
 <body>
@@ -69,7 +77,12 @@
         <input type="number" id="shipping" placeholder="Shipping Cost" />
         <input type="number" id="profitPercent" placeholder="Profit Margin (%)" />
         <input type="number" id="discount" placeholder="Final Discount (%) (default 0)" />
-        <button onclick="calculatePrice()">Calculate</button>
+        
+        <div class="button-row">
+            <button onclick="calculatePrice()">Calculate</button>
+            <button onclick="resetForm()" style="background:#6c757d;">Reset</button>
+        </div>
+        
         <div class="result" id="result"></div>
     </div>
 
@@ -81,11 +94,9 @@
             const profitPercent = parseFloat(document.getElementById('profitPercent').value);
             let discount = parseFloat(document.getElementById('discount').value);
 
-            // Default quantity to 1 if empty or invalid
             if (isNaN(quantity) || quantity <= 0) {
                 quantity = 1;
             }
-            // Default discount to 0 if empty or invalid
             if (isNaN(discount) || discount < 0) {
                 discount = 0;
             }
@@ -110,6 +121,15 @@
                 <strong>Final Selling Price (After Discount): ৳${finalSellingPrice.toFixed(2)}</strong><br>
                 <strong>Profit Amount (After Discount): ৳${finalProfit.toFixed(2)}</strong>
             `;
+        }
+
+        function resetForm() {
+            document.getElementById('price').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('shipping').value = '';
+            document.getElementById('profitPercent').value = '';
+            document.getElementById('discount').value = '';
+            document.getElementById('result').innerHTML = '';
         }
     </script>
 </body>
